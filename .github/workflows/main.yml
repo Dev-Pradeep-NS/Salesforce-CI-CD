@@ -1,0 +1,58 @@
+name: Salesforce CI/CD
+
+on:
+  push:
+    branches: [ develop ]
+
+env:
+  SCRATCH_ORG_ALIAS: 'developmentOrg'
+  ROOTDIR: 'force-app/main/default/'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 17
+          
+      - name: Install salesforce cli
+        run: npm install @salesforce/cli --global
+
+      - name: Decrypt server key
+        run: openssl aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -k ${{ secrets.SERVER_KEY_PASSWORD }} -pbkdf2
+
+      - name: Authenticate to the Dev Hub using the server key
+        run: sf org login jwt --client-id ${{ secrets.SF_CONSUMER_KEY_DEV }} --jwt-key-file assets/server.key --username ${{ secrets.SF_USERNAME_DEV }} --alias pradeepDevOrg
+
+      - name: Create Scratch Org
+        run: sf org create scratch --target-dev-hub pradeepDevOrg --definition-file config/project-scratch-def.json --set-default --alias $SCRATCH_ORG_ALIAS --duration-days 7
+
+      - name: Push source to scratch org
+        run: sf project deploy start  --source-dir $ROOTDIR --target-org $SCRATCH_ORG_ALIAS
+
+      - name: Test the class
+        run: sf apex run test --target-org $SCRATCH_ORG_ALIAS
+
+      - name: Delete Scratch Org
+        run: sf org delete scratch --target-org $SCRATCH_ORG_ALIAS --no-prompt
+
+  deploy:
+    name: Deploy
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Authenticate to Dev hub using the server key
+        run: sf org login jwt --client-id ${{ secrets.SF_CONSUMER_KEY_PROD }} --jwt-key-file assets/server.key --username ${{ secrets.SF_USERNAME_PROD }} --alias pradeepProdOrg
+
+      - name: Validate to Production org (This is with source code, all files, etc)
+        run: sf project deploy validate --source-dir $ROOTDIR --target-org pradeepProdOrg
+
+      - name: Push source to Production Org
+        run: sf project deploy quick --async --use-most-recent --target-org pradeepProdOrg
