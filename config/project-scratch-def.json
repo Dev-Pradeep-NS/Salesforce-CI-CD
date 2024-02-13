@@ -1,7 +1,8 @@
 {
-  "orgName": "Demo company",
+  "orgName": "Pradeep's Scratch Org",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "description": "This org is to test ci/cd pipeline",
+  "features": [],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
