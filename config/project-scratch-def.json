@@ -1,6 +1,16 @@
 {
-  "orgName": "Pradeep's Scratch Org",
-  "edition": "Developer",
-  "description": "This org is to test ci/cd pipeline",
-  "features": []
+    "orgName": "Pradeep's Scratch Org",
+    "edition": "Developer",
+    "description": "This org is to test ci/cd pipeline",
+    "features": ["MaxApexCodeSize:10"],
+    "settings" : {
+        "orgPreferenceSettings": {
+            "s1EncryptedStoragePref2": false
+        },
+        "securitySettings": {
+            "sessionSettings": {
+                "sessionTimeout": "TwelveHours"
+            }
+        }
+    }
 }
