@@ -1,20 +1,14 @@
-# Salesforce DX Project: Next Steps
+# Steps to create CI/CD Pipeline for Salesforce 
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
-
-## How Do You Plan to Deploy Your Changes?
-
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
-
-## Configure Your Salesforce DX Project
-
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
-=======
-# Salesforce-CI-CD
+## Set up OAuth JWT Bearer Token authentication
+    Open VS Code in remote repository
+    Use openssl to create a self-signed certificate and key
+    Use Salesforce Admin interface to set up connected app
+    Test local use of authentication flow
+    Store self-signed key in repository
+## Write the GitHub Action
+    Authenticate the current session with Salesforce
+    Retrieve the target repository
+    Deploy metadata and run unit tests on a production org
+## Activate Action with a repository PUSH
+    Use GitHub and Salesforce web interfaces to monitor the execution of the Action
