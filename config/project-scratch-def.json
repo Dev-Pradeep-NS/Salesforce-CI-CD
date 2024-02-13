@@ -2,13 +2,5 @@
   "orgName": "Pradeep's Scratch Org",
   "edition": "Developer",
   "description": "This org is to test ci/cd pipeline",
-  "features": [],
-  "settings": {
-    "lightningExperienceSettings": {
-      "enableS1DesktopEnabled": true
-    },
-    "mobileSettings": {
-      "enableS1EncryptedStoragePref2": false
-    }
-  }
+  "features": []
 }
