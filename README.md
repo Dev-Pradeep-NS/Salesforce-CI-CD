@@ -1,7 +1,7 @@
 # Steps to create CI/CD Pipeline for Salesforce 
 
 ## Set up OAuth JWT Bearer Token authentication
-    Open VS Code in remote repository
+    Open VS Code in remote repository.
     Use openssl to create a self-signed certificate and key
     Use Salesforce Admin interface to set up connected app
     Test local use of authentication flow
