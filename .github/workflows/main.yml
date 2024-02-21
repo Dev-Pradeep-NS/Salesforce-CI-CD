@@ -24,10 +24,10 @@ jobs:
         run: npm install @salesforce/cli --global
 
       - name: Decrypt server key
-        run: openssl aes-256-cbc -d -in assets/Dev/server.key.enc -out assets/Dev/server.key -k ${{ secrets.DEV_SERVER_KEY_PASSWORD }} -pbkdf2
+        run: openssl aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -k ${{ secrets.SERVER_KEY_PASSWORD }} -pbkdf2
 
       - name: Authenticate to the Dev Hub using the server key
-        run: sf org login jwt --client-id ${{ secrets.SF_CONSUMER_KEY_DEV }} --jwt-key-file assets/Dev/server.key --username ${{ secrets.SF_USERNAME_DEV }} --alias pradeepDevOrg --set-default-dev-hub
+        run: sf org login jwt --client-id ${{ secrets.SF_CONSUMER_KEY_DEV }} --jwt-key-file assets/server.key --username ${{ secrets.SF_USERNAME_DEV }} --alias pradeepDevOrg --set-default-dev-hub
 
       - name: Create Scratch Org
         run: sf org create scratch --definition-file config/project-scratch-def.json --set-default --alias $SCRATCH_ORG_ALIAS --duration-days 7 --wait 30
@@ -60,10 +60,10 @@ jobs:
         run: npm install @salesforce/cli --global
 
       - name: Decrypt server key
-        run: openssl aes-256-cbc -d -in assets/Prod/server.key.enc -out assets/Prod/server.key -k ${{ secrets.PROD_SERVER_KEY_PASSWORD }} -pbkdf2
+        run: openssl aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -k ${{ secrets.SERVER_KEY_PASSWORD }} -pbkdf2
         
       - name: Authenticate to Dev hub using the server key
-        run: sf org login jwt --client-id ${{ secrets.SF_CONSUMER_KEY_PROD }} --jwt-key-file assets/Prod/server.key --username ${{ secrets.SF_USERNAME_PROD }} --alias pradeepProdOrg 
+        run: sf org login jwt --client-id ${{ secrets.SF_CONSUMER_KEY_PROD }} --jwt-key-file assets/server.key --username ${{ secrets.SF_USERNAME_PROD }} --alias pradeepProdOrg 
 
       - name: Validate to Production org (This is with source code, all files, etc)
         run: sf project deploy validate --source-dir $ROOTDIR --target-org pradeepProdOrg
