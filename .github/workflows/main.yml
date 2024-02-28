@@ -2,11 +2,11 @@ name: Salesforce CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 env:
-  SCRATCH_ORG_ALIAS: 'developmentOrg'
-  ROOTDIR: 'force-app/main/default/'
+  SCRATCH_ORG_ALIAS: "developmentOrg"
+  ROOTDIR: "force-app/main/default/"
 
 jobs:
   test:
@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 20
-          
+
       - name: Install salesforce cli
         run: npm install @salesforce/cli --global
 
@@ -55,15 +55,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 20
-          
+
       - name: Install salesforce cli
         run: npm install @salesforce/cli --global
 
       - name: Decrypt server key
         run: openssl aes-256-cbc -d -in assets/server.key.enc -out assets/server.key -k ${{ secrets.SERVER_KEY_PASSWORD }} -pbkdf2
-        
+
       - name: Authenticate to Dev hub using the server key
-        run: sf org login jwt --client-id ${{ secrets.SF_CONSUMER_KEY_PROD }} --jwt-key-file assets/server.key --username ${{ secrets.SF_USERNAME_PROD }} --alias pradeepProdOrg 
+        run: sf org login jwt --client-id ${{ secrets.SF_CONSUMER_KEY_PROD }} --jwt-key-file assets/server.key --username ${{ secrets.SF_USERNAME_PROD }} --alias pradeepProdOrg
 
       - name: Validate to Production org (This is with source code, all files, etc)
         run: sf project deploy validate --source-dir $ROOTDIR --target-org pradeepProdOrg
