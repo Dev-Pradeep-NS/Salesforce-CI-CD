@@ -5,7 +5,7 @@
       "default": true
     }
   ],
-  "name": "Pradeep_Git",
+  "name": "Salesforce_GitHubActions",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "59.0"
